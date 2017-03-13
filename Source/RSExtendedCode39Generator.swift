@@ -135,17 +135,7 @@ open class RSExtendedCode39Generator: RSCode39Generator {
     }
     
     override open func isValid(_ contents: String) -> Bool {
-        if contents.length() > 0 {
-            let encContents = self.encodeContents(contents)
-            for character in encContents.characters {
-                let location = CODE39_ALPHABET_STRING.location(String(character))
-                if location == NSNotFound {
-                    return false
-                }
-            }
-            return true
-        }
-        return false
+        return contents.length() > 0
     }
     
     override open func barcode(_ contents: String) -> String {

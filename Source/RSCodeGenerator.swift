@@ -105,8 +105,9 @@ open class RSAbstractCodeGenerator : RSCodeGenerator {
         // Bottom spacing       = 2
         // Left & right spacing = 2
         // Height               = 28
-        let width = length + 4
-        let size = CGSize(width: CGFloat(width), height: 28)
+        let multiplier = 4
+        let width = multiplier*length + 4
+        let size = CGSize(width: CGFloat(width), height: CGFloat(multiplier*28))
         UIGraphicsBeginImageContextWithOptions(size, false, 0)
         if let context = UIGraphicsGetCurrentContext() {
             context.setShouldAntialias(false)
@@ -115,11 +116,11 @@ open class RSAbstractCodeGenerator : RSCodeGenerator {
             self.strokeColor.setStroke()
             
             context.fill(CGRect(x: 0, y: 0, width: size.width, height: size.height))
-            context.setLineWidth(1)
+            context.setLineWidth(CGFloat(multiplier * 1))
             
             for i in 0..<length {
                 if completeBarcode[i] == "1" {
-                    let x = i + (2 + 1)
+                    let x = multiplier*(i + (2 + 1))
                     context.move(to: CGPoint(x: CGFloat(x), y: 1.5))
                     context.addLine(to: CGPoint(x: CGFloat(x), y: size.height - 2))
                 }
@@ -182,7 +183,8 @@ open class RSAbstractCodeGenerator : RSCodeGenerator {
                     filter.setValue(inputCorrectionLevel.rawValue, forKey: "inputCorrectionLevel")
                 }
                 if let outputImage = filter.outputImage {
-                    if let cgImage = ContextMaker.make().createCGImage(outputImage, from: outputImage.extent) {
+                    let largerImage = outputImage.applying(CGAffineTransform(scaleX: 5.0, y: 5.0))
+                    if let cgImage = ContextMaker.make().createCGImage(largerImage, from: largerImage.extent) {
                         return UIImage(cgImage: cgImage, scale: 1, orientation: UIImageOrientation.up)
                     }
                 }
