@@ -120,8 +120,8 @@ open class RSAbstractCodeGenerator : RSCodeGenerator {
             
             for i in 0..<length {
                 if completeBarcode[i] == "1" {
-                    let x = multiplier*(i + (2 + 1))
-                    context.move(to: CGPoint(x: CGFloat(x), y: 1.5))
+                    let x = multiplier * i + 3 // 3 left spacing
+                    context.move(to: CGPoint(x: CGFloat(x), y: 2))
                     context.addLine(to: CGPoint(x: CGFloat(x), y: size.height - 2))
                 }
             }
