@@ -303,7 +303,7 @@ open class RSCodeReaderViewController: UIViewController, AVCaptureMetadataOutput
         super.viewDidLayoutSubviews()
         
         if let videoPreviewLayer = self.videoPreviewLayer {
-            let videoOrientation = RSCodeReaderViewController.interfaceOrientationToVideoOrientation(UIApplication.shared.statusBarOrientation)
+            let videoOrientation = RSCodeReaderViewController.interfaceOrientationToVideoOrientation(.portrait) // fixes failure in app extensions
             if videoPreviewLayer.connection.isVideoOrientationSupported
                 && videoPreviewLayer.connection.videoOrientation != videoOrientation {
                 videoPreviewLayer.connection.videoOrientation = videoOrientation
